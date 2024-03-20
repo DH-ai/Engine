@@ -78,14 +78,16 @@ def ActPirate(pirate):
 
     minResource = min(rum,Wood,Gunpowder)
     
-    state = pirate.trackPlayers()
+    states = pirate.trackPlayers()
     # here we will check for island 
+    # print(checkIsland(pirate)) 
     # 1. checking for island 
-    print(checkIsland(pirate)) 
-   
-
+  
     avail, move = checkIsland (pirate)
-    if avail and not ("myCaptured" in state):
+    if avail and ((not ("myCaptured" in states) ) or (("oppCapturing" in states) or ("oppCaptured" in states))):
+        print(states)
+        pirate.setT
+            
         return move
     
     # 2. if  not captured then go there 
@@ -95,10 +97,14 @@ def ActPirate(pirate):
     # 6. leave 
     # 7. randomly exploring pirate got signal opp capturing even no. of pirates goes there to kill enem pirates
     # 8. Leave 
-    
+    # 9. complete this logic will help in further controling the randomness of pirates
+        
     
     
     if (current [0][0:-1] == "island"):
+        s= pirate.getID() + "Captured"
+        pirate.setSignal(s)
+        
         return 0
 
     resources=False
