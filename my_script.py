@@ -35,22 +35,31 @@ def checkIsland(pirate):
     left = pirate.investigate_left()
     right = pirate.investigate_right()
     move = -1
+    islandID = None
     if (up[0][0:-1] == "island" or down[0][0:-1] == "island") and (left[0][0:-1] == "island" or right[0][0:-1] == "island"):
         if up[0][0:-1] == "island":
+            islandID = up[0][-1]
             move = 1
         elif down[0][0:-1] == "island":
+            islandID = down[0][-1]
+
             move=3
         elif left[0][0:-1] == "island":
+            islandID = left[0][-1]
+
             move = 4
         elif right[0][0:-1] == "island":
+            islandID = right[0][-1]
+
             move = 2
         
+
+            
         
         
-        
-        return (True,move)
+        return (True,move,islandID)
     else:
-        return (False,move)
+        return (False,move,islandID)
     
 
 
@@ -80,18 +89,39 @@ def ActPirate(pirate):
     
     states = pirate.trackPlayers()
     # here we will check for island 
-    # print(checkIsland(pirate)) 
+
     # 1. checking for island 
-  
-    avail, move = checkIsland (pirate)
-    if avail and ((not ("myCaptured" in states) ) or (("oppCapturing" in states) or ("oppCaptured" in states))):
-        print(states)
-        pirate.setT
-            
-        return move
-    
     # 2. if  not captured then go there 
-    # 3. that pirate will stay there forever
+  
+    avail, move, islandID = checkIsland (pirate)
+    # print(islandID)
+    print((avail and (states[int(islandID if islandID!= None else 1)-1]=="")),states[int(islandID if islandID!= None else 1)-1])
+
+
+    if (avail and (states[int(islandID)+2]=="oppCapturing") ) or (avail and (states[int(islandID)-1]=="")):
+        move = move 
+        # print(states[int(islandID)-1])
+        if current[0] =="island":
+            # 3. that pirate will stay there forever
+            move = 0
+        return move
+    # will stop there 
+
+
+    if avail and (("oppCapturing" in states) or ("oppCaptured" in states) ):
+        _move = move
+        # print(2222222222222222)
+        if Gunpowder>=100:
+         
+            if up[1]=="enemy":
+                _move = 1
+            elif right[1] =="enemy":
+                _move = 2
+            elif left[1]=="enemy":
+                _move = 4
+            elif down[1]=="enemy":
+                _move = 3
+        return _move
     # 4. another pirate come see captured will go away if opp is not capturing 
     # 5. that pirate try to kill opponent 
     # 6. leave 
@@ -102,21 +132,21 @@ def ActPirate(pirate):
     
     
     if (current [0][0:-1] == "island"):
-        s= pirate.getID() + "Captured"
-        pirate.setSignal(s)
+        # s= pirate.getID() + "Captured"
+        # pirate.setSignal(s)
         
         return 0
 
-    resources=False
-    
+
     
     
     
     # avoiding enemy pirates 
     
+    # 1/3 of pirates are going to chase 
 
-    if Gunpowder>=100:
-         
+    if int(pirate.getID())%3==0:
+
         if up[1]=="enemy":
             return 1
         elif right[1] =="enemy":
