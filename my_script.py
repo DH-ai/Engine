@@ -92,10 +92,10 @@ def ActPirate(pirate):
 
     # 1. checking for island 
     # 2. if  not captured then go there 
-  
+#   
     avail, move, islandID = checkIsland (pirate)
     # print(islandID)
-    print((avail and (states[int(islandID if islandID!= None else 1)-1]=="")),states[int(islandID if islandID!= None else 1)-1])
+    # print((avail and (states[int(islandID if islandID!= None else 1)-1]=="")),states[int(islandID if islandID!= None else 1)-1])
 
 
     if (avail and (states[int(islandID)+2]=="oppCapturing") ) or (avail and (states[int(islandID)-1]=="")):
@@ -176,6 +176,7 @@ def ActPirate(pirate):
                 move = 1 if random.randint(1,2)==2 else random.randint(3,4)
         elif move ==4  and int(pirate.getSignal()) ==2:
                 move = random.randint(1,3)
+        print(move)
     pirate.setSignal(f"{move}")
               
     return move
