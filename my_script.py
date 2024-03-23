@@ -78,7 +78,7 @@ def ActPirate(pirate):
     left = pirate.investigate_left()
     nw = pirate.investigate_nw()
     
-    pirate.setTeamSignal(f"{pirate.getID()}")
+    # pirate.setTeamSignal(f"{pirate.getID()}")
 
     rum = pirate.getTotalRum()
     Wood = pirate.getTotalWood()
@@ -92,32 +92,78 @@ def ActPirate(pirate):
 
     # 1. checking for island 
     # 2. if  not captured then go there 
-#   
+    sig =pirate.getTeamSignal()
     avail, move, islandID = checkIsland (pirate)
-    
-    if (avail):
-        _move = move
-
-        if current[0][0:-1] =="island":
-            # 3. that pirate will stay there forever
-            _move = 0
-    
-    
-    
-    
-        return _move
-
-    # will stop there 
-
-
-    
     # 4. another pirate come see captured will go away if opp is not capturing 
-    # 5. that pirate try to kill opponent 
-    # 6. leave 
-    # 7. randomly exploring pirate got signal opp capturing even no. of pirates goes there to kill enem pirates
-    # 8. Leave 
-    # 9. complete this logic will help in further controling the randomness of pirates
-        
+    if (
+        (islandID=="1" and states[0]=="myCaptured") or 
+        (islandID=="2" and states[1]=="myCaptured") or 
+        (islandID=="3" and states[2]=="myCaptured")
+    ):
+        #then move along
+        if current[0][0:-1] =="island":
+                # 3. that pirate will stay there forever
+                return 0 
+     
+    else  :
+        if (avail):
+            # if (islandID=="1"):
+            #     sig=sig+f" 1:({x},{y}) "
+            # elif (islandID=="2"):
+            #     sig=sig+f" 2:({x},{y}) "
+            # else:
+            #     sig=sig+f" 3:({x},{y}) "
+
+            
+            
+            _move = move
+            
+            if current[0][0:-1] =="island":
+                # 3. that pirate will stay there forever
+                _move = 0
+            # pirate.setTeamSignal(sig)
+            return _move
+    # print(pirate.getTeamSignal())
+    # if int(pirate.getID())%4==0:
+    #     sig = pirate.getTeamSignal()
+    #     if (states[3]=="oppCapturing"):  
+    #         x=0
+    #         y=0
+    #         for i in range(len(sig)):
+    #             if sig != "":
+                     
+    #                 if sig[i]=="(":
+    #                     x= x*10+ int(sig[i+1]) 
+    #                     y = y*10+int(sig[i+4])
+    #                     break
+    #         moveTo(x,y,pirate)
+    #     elif (states[4]=="oppCapturing"):
+    #         x=0
+    #         y=0
+    #         for i in range(len(sig)):
+    #             if sig != "":
+                        
+    #                 if sig[i]=="2":
+    #                     x= int(sig[i+2]) 
+    #                     y = int(sig[i+4])
+    #                     break
+    #         moveTo(x,y,pirate)
+    #     elif (states[5]=="oppCapturing"):
+    #         x=0
+    #         y=0
+    #         for i in range(len(sig)):
+    #             if sig != "":
+                        
+    #                 if sig[i]=="3":
+    #                     x= int(sig[i+2]) 
+    #                     y = int(sig[i+4])
+    #                     break
+    #         moveTo(x,y,pirate)    
+     
+
+
+    
+    
     
    
 
